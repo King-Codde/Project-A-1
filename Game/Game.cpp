@@ -3,9 +3,37 @@
 #include <ctime>
 #include <cstring>
 const int n = 10;
+int lvl[10];//Уровни
+int lvl_hp[10];//Жизнь при соответственном уровне
+int lvl_exp[10];//Опыт при соответственном уровне
+int lvl_dmg[10];//Урон при соответственном уровне
+
+void lvl_inic(int const& n, int* lvl, int* lvl_hp, int* lvl_exp, int* lvl_dmg)
+{
+    for (int i = 0; i < n; i++)
+        lvl[i] = i + 1;
+    for (int i = 0; i < n; i++)
+        lvl_hp[i] = 25 * i + 100;
+    int lvl_exp1[10] = { 10,25,45,70,85,100,130,170,200,250 };//Опыт при соответственном уровне
+    for (int i = 0; i < n; i++)
+    {
+        lvl_exp[i] = lvl_exp1[i];
+    }
+    int lvl_dmg1[10] = { 3,5,9,12,15,19,24,28,35,40 };//Урон при соответственном уровне
+    for (int i = 0; i < n; i++)
+    {
+        lvl_dmg[i] = lvl_dmg1[i];
+    }
+}
 
 //Команды для Кузни
-enum SMITH_COMMAND
+class COMMAND
+{
+public:
+    int my_command = 0;
+};
+//Команды для Кузни
+enum SMITH_COMMAN
 {
     SMITH_COMMAND_IRON_CLUB = 1,
     SMITH_COMMAND_STEEL_SWORD = 2,
@@ -55,61 +83,132 @@ public:
     int armor_hp_iron_armor = 250;
 };
 
+class hero
+{
+public:
+    int hp = 100;
+    int dmg = 0;
+    int exp = 0;
+    int money = 0;
+    int goddamn = 0;
+    int lvl_number = 0;
+    int dmg_item = 0;
+    int hp_item = 0;
+    int shop = 0;
+    std::string weapon_name = "Тренировочные перчатки";
+    std::string armor_name = "Тряпье";
+    std::string shop_name;
+    //void info(const int n, int& lvl_number, int lvl[10], int lvl_exp[10], int& exp, int& hp, int& dmg, int& money, std::string weapon_name, std::string armor_name, int& goddamn);
+    void info(const int n, int& lvl_number, int lvl[10], int lvl_exp[10], int& exp, int& hp, int& dmg, int& money, std::string weapon_name, std::string armor_name, int& goddamn);
 
-//Информация о персонаже
-void info(const int n, int& lvl_number, int lvl[10], int lvl_exp[10], int& exp, int& hp, int& dmg, int& money, std::string weapon_name, std::string armor_name, int& goddamn);
-//Система битвы
-void battle(int& enemy, int& hp, int& enemy_hp, int& dmg, int& enemy_dmg, int& money, int& enemy_money, int& lvl_number, const int n, int& enemy_exp, int& exp, int lvl_exp[], int lvl_hp[], int& hp_item, int& goddamn);
-// Фонтан
-void fountain(int& money, int& hp, int& lvl_number, int lvl_hp[], int hp_item, int& goddamn);
-//Кузнец
-void smith(int& money, int& shop, int& shop_money, int& shop_hp_item, int& shop_dmg_item, int& comand, int& hp_item, int& dmg_item, std::string weapon_name, std::string armor_name, std::string shop_name);
-//Подбор
-void recruitment_of_the_enemy(int& enemy_hp, int& enemy_dmg, int& enemy_exp, int& enemy_money, int& enemy, int& lvl_number);
-//Начальная инициализация
-void specifications(int const& n, int* lvl, int* lvl_hp, int* lvl_exp, int* lvl_dmg, std::string weapon_name, std::string armor_name, std::string shop_name, int& lvl_number, int& exp, int& comand, int& hp, int& hp_item, int& goddamn, int& dmg, int& dmg_item, int& enemy, int& enemy_hp, int& enemy_dmg, int& enemy_exp, int& money, int& shop, int& shop_money, int& enemy_money, int& shop_hp_item, int& shop_dmg_item);
-//Цикл игры
-void Game_Loop(int const& n, int* lvl, int* lvl_hp, int* lvl_exp, int* lvl_dmg, std::string weapon_name, std::string armor_name, std::string shop_name, int& lvl_number, int& exp, int& comand, int& hp, int& hp_item, int& goddamn, int& dmg, int& dmg_item, int& enemy, int& enemy_hp, int& enemy_dmg, int& enemy_exp, int& money, int& shop, int& shop_money, int& enemy_money, int& shop_hp_item, int& shop_dmg_item);
+};
+
+class enemy_characteristic
+{
+public:
+    int enemy = 0;
+    int enemy_hp = 0;
+    int enemy_dmg = 0;
+    int enemy_exp = 0;
+    int enemy_money = 0;
+};
+
+class shop_smith
+{
+public:
+    int shop_money = 0;
+    int shop_hp_item = 0;
+    int shop_dmg_item = 0;
+    int shop_name = 0;
 
 
+};
+
+struct fountain
+{
+    void fountain_(int& money, int& hp, int& lvl_number, int lvl_hp[], int hp_item, int& goddamn);
+};
+
+struct smith
+{
+    shop_smith smith_;
+    int shop_money = smith_.shop_money;
+    int shop_hp_items = smith_.shop_hp_item;
+    int shop_dmg_items = smith_.shop_dmg_item;
+    int shop_name = smith_.shop_name;
 
 
-int main()
+    void shoop(int& money, int& shop, int& shop_money, int& shop_hp_item, int& shop_dmg_item, int& comand, int& hp_item, int& dmg_item, std::string weapon_name, std::string armor_name, std::string shop_name);
+};
+
+struct buttle
+{
+    enemy_characteristic enemy_charac;
+    int enemy = enemy_charac.enemy;
+    int enemy_hp = enemy_charac.enemy_hp;
+    int enemy_dmg = enemy_charac.enemy_dmg;
+    int enemy_exp = enemy_charac.enemy_exp;
+    int enemy_money = enemy_charac.enemy_money;
+
+
+    void recruitment_of_the_enemy(int& enemy_hp, int& enemy_dmg, int& enemy_exp, int& enemy_money, int& enemy, int& lvl_number);
+    void battle(int& enemy, int& hp, int& enemy_hp, int& dmg, int& enemy_dmg, int& money, int& enemy_money, int& lvl_number, const int n, int& enemy_exp, int& exp, int lvl_exp[], int lvl_hp[], int& hp_item, int& goddamn);
+
+};
+
+
+void buttle::recruitment_of_the_enemy(int& enemy_hp, int& enemy_dmg, int& enemy_exp, int& enemy_money, int& enemy, int& lvl_number)
 {
     setlocale(LC_ALL, "rus");
-    srand(time(NULL));
-    std::string weapon_name = "Тренировочные перчатки", armor_name = "Тряпье", shop_name, hero_name; //Названия
-    int lvl_number, exp, comand;
-    int hp, hp_item, goddamn;
-    int dmg, dmg_item;
-    int enemy, enemy_hp, enemy_dmg, enemy_exp;
-    int money, shop, shop_money, enemy_money, shop_hp_item, shop_dmg_item;
-    int lvl[10];//Уровни
-    int lvl_hp[10];//Жизнь при соответственном уровне
-    int lvl_exp[10];//Опыт при соответственном уровне
-    int lvl_dmg[10];//Урон при соответственном уровне
-    specifications(n, lvl, lvl_hp, lvl_exp, lvl_dmg, weapon_name, armor_name, shop_name, lvl_number, exp, comand, hp, hp_item, goddamn, dmg, dmg_item, enemy, enemy_hp, enemy_dmg, enemy_exp, money, shop, shop_money, enemy_money, shop_hp_item, shop_dmg_item);
-    Game_Loop(n, lvl, lvl_hp, lvl_exp, lvl_dmg, weapon_name, armor_name, shop_name, lvl_number, exp, comand, hp, hp_item, goddamn, dmg, dmg_item, enemy, enemy_hp, enemy_dmg, enemy_exp, money, shop, shop_money, enemy_money, shop_hp_item, shop_dmg_item);
-    system("PAUSE");
-    return 0;
-}
-void info(const int n, int& lvl_number, int lvl[10], int lvl_exp[10], int& exp, int& hp, int& dmg, int& money, std::string weapon_name, std::string armor_name, int& goddamn) {
-    setlocale(LC_ALL, "rus");
-    std::cout << "Ваш уровень " << lvl[lvl_number] << "." << std::endl;
-    if (lvl_number + 1 != n) {
-        std::cout << "До нового уровня осталось " << lvl_exp[lvl_number] - exp << " опыта." << std::endl;
+    srand(time(0));
+    enemy = rand() % 100;
+    EnemyAndCo enemies;
+    if (enemy >= 0 && enemy <= 6)
+    {
+        std::cout << "Вы наткнулись на лешого." << std::endl;
+        enemy_hp = enemies.enemy_wood_hp * (lvl_number + 1);
+        enemy_dmg = enemies.enemy_wood_dmg;
+        enemy_exp = enemies.enemy_wood_exp;
+        enemy_money = enemies.enemy_wood_money;
     }
-    else {
-        std::cout << "До нового уровня осталось 0 опыта." << std::endl;
+    else if (enemy >= 7 && enemy <= 20)
+    {
+        std::cout << "С дерева спрыгнул эльф." << std::endl;
+        enemy_hp = enemies.enemy_elf_hp * (lvl_number + 1);
+        enemy_dmg = enemies.enemy_elf_dmg;
+        enemy_exp = enemies.enemy_elf_exp;
+        enemy_money = enemies.enemy_elf_money;
     }
-    std::cout << "Ваше количество проклятий " << goddamn / 10 << ". " << "Ваше здоровье будет уменьшенно на " << goddamn << "." << std::endl;
-    std::cout << "Ваше здоровье " << hp << "." << std::endl;
-    std::cout << "Ваш урон " << dmg << "." << std::endl;
-    std::cout << "Количнство монет " << money << "." << std::endl;
-    std::cout << "Ваше оружие " << weapon_name << "." << std::endl;
-    std::cout << "Ваша броня " << armor_name << "." << std::endl << std::endl;
+    else if (enemy >= 21 && enemy <= 41)
+    {
+        std::cout << "Огр хочет сделать из вас суп." << std::endl;
+        enemy_hp = enemies.enemy_ogr_hp * (lvl_number + 1);
+        enemy_dmg = enemies.enemy_ogr_dmg;
+        enemy_exp = enemies.enemy_ogr_dmg;
+        enemy_money = enemies.enemy_ogr_money;
+    }
+    else if (enemy >= 42 && enemy <= 68)
+    {
+        std::cout << "На вас напал дикий пес ." << std::endl;
+        enemy_hp = enemies.enemy_wild_dog_hp * (lvl_number + 1);
+        enemy_dmg = enemies.enemy_wild_dog_dmg;
+        enemy_exp = enemies.enemy_wild_dog_exp;
+        enemy_money = enemies.enemy_wild_dog_money;
+    }
+    else if (enemy >= 69 && enemy <= 92)
+    {
+        std::cout << "Из куста выпрыгнул слизень." << std::endl;
+        enemy_hp = enemies.enemy_slizen_hp * (lvl_number + 1);
+        enemy_dmg = enemies.enemy_slizen_dmg;
+        enemy_exp = enemies.enemy_slizen_exp;
+        enemy_money = enemies.enemy_slizen_money;
+    }
+    else if (enemy >= 93 && enemy <= 99)
+        std::cout << "Противник не найден.\n\n";
+
 }
-void battle(int& enemy, int& hp, int& enemy_hp, int& dmg, int& enemy_dmg, int& money, int& enemy_money, int& lvl_number, const int n, int& enemy_exp, int& exp, int lvl_exp[], int lvl_hp[], int& hp_item, int& goddamn) {
+void buttle::battle(int& enemy, int& hp, int& enemy_hp, int& dmg, int& enemy_dmg, int& money, int& enemy_money, int& lvl_number, const int n, int& enemy_exp, int& exp, int lvl_exp[], int lvl_hp[], int& hp_item, int& goddamn)
+{
     setlocale(LC_ALL, "rus");
     int hit;
     int lvlexp = lvl_exp[lvl_number];
@@ -189,37 +288,24 @@ void battle(int& enemy, int& hp, int& enemy_hp, int& dmg, int& enemy_dmg, int& m
         }
     }
 }
-void fountain(int& money, int& hp, int& lvl_number, int lvl_hp[], int hp_item, int& goddamn) {
+void hero::info(const int n, int& lvl_number, int lvl[10], int lvl_exp[10], int& exp, int& hp, int& dmg, int& money, std::string weapon_name, std::string armor_name, int& goddamn)
+{
     setlocale(LC_ALL, "rus");
-    int comand;
-    std::cout << "Вы подошли к фотану.\nНа табличке возле него было написанно: \n„Коли хочешь испить из волшебного фонтана, путник, должен ты заплатить 30 монет, в ином случае будешь навеки проклят!“" << std::endl << std::endl;
-    std::cout << "Ваше количество монет: " << money << std::endl << std::endl;
-    std::cout << "1) Заплатить.\n2) Не платить.\n0) Уйти." << std::endl << std::endl;
-    std::cin >> comand;
-    std::cout << std::endl;
-    switch (comand) {
-    case 0:break;
-    case 1:
-        if (money >= 30) {
-            std::cout << "Вы исцелились." << std::endl << std::endl;
-            hp = lvl_hp[lvl_number] + hp_item - goddamn;
-            money -= 30;
-        }
-        else {
-            std::cout << "У вас недостатачно монет." << std::endl << std::endl;
-        }
-        break;
-    case 2:
-        std::cout << "Вы исцелились.\nВаше максимальное количество здоровья уменьшенно на 10 единиц." << std::endl << std::endl;
-        goddamn += 10;
-        hp = lvl_hp[lvl_number] + hp_item - goddamn;
-        if (hp < 1) {
-            std::cout << "Вас погубила жадность." << std::endl;
-        }
-        break;
+    std::cout << "Ваш уровень " << lvl[lvl_number] << "." << std::endl;
+    if (lvl_number + 1 != n) {
+        std::cout << "До нового уровня осталось " << lvl_exp[lvl_number] - exp << " опыта." << std::endl;
     }
+    else {
+        std::cout << "До нового уровня осталось 0 опыта." << std::endl;
+    }
+    std::cout << "Ваше количество проклятий " << goddamn / 10 << ". " << "Ваше здоровье будет уменьшенно на " << goddamn << "." << std::endl;
+    std::cout << "Ваше здоровье " << hp << "." << std::endl;
+    std::cout << "Ваш урон " << dmg << "." << std::endl;
+    std::cout << "Количнство монет " << money << "." << std::endl;
+    std::cout << "Ваше оружие " << weapon_name << "." << std::endl;
+    std::cout << "Ваша броня " << armor_name << "." << std::endl << std::endl;
 }
-void smith(int& money, int& shop, int& shop_money, int& shop_hp_item, int& shop_dmg_item, int& comand, int& hp_item, int& dmg_item, std::string weapon_name, std::string armor_name, std::string shop_name)
+void smith::shoop(int& money, int& shop, int& shop_money, int& shop_hp_item, int& shop_dmg_item, int& comand, int& hp_item, int& dmg_item, std::string weapon_name, std::string armor_name, std::string shop_name)
 {
     setlocale(LC_ALL, "rus");
     std::cout << "Приветствую путник! Что-то хочешь прикупить?\n";
@@ -227,6 +313,7 @@ void smith(int& money, int& shop, int& shop_money, int& shop_hp_item, int& shop_
     {
         int comand;
         wepon_and_armor w_and_a;
+        COMMAND my_command;
         std::cout << "У вас " << money << " монет.\n\n";
         std::cout << "1) Купить Железная Дубинка         +5  к атаке              40 монет.\n2) Купить Стальной Меч             +15 к атаке             150 монет.\n";
         std::cout << "3) Купить Кожаная броня            +50 к жизни              70 монет.\n4) Купить Железная броня          +250 к жизни             300 монет.\n";
@@ -290,104 +377,71 @@ void smith(int& money, int& shop, int& shop_money, int& shop_hp_item, int& shop_
     }
 
 }
-void recruitment_of_the_enemy(int& enemy_hp, int& enemy_dmg, int& enemy_exp, int& enemy_money, int& enemy, int& lvl_number)
+void fountain::fountain_(int& money, int& hp, int& lvl_number, int lvl_hp[], int hp_item, int& goddamn)
 {
     setlocale(LC_ALL, "rus");
-    enemy = rand() % 100;
-    EnemyAndCo enemies;
-    if (enemy >= 0 && enemy <= 6)
-    {
-        std::cout << "Вы наткнулись на лешого." << std::endl;
-        enemy_hp = enemies.enemy_wood_hp * (lvl_number + 1);
-        enemy_dmg = enemies.enemy_wood_dmg;
-        enemy_exp = enemies.enemy_wood_exp;
-        enemy_money = enemies.enemy_wood_money;
-    }
-    else if (enemy >= 7 && enemy <= 20)
-    {
-        std::cout << "С дерева спрыгнул эльф." << std::endl;
-        enemy_hp = enemies.enemy_elf_hp * (lvl_number + 1);
-        enemy_dmg = enemies.enemy_elf_dmg;
-        enemy_exp = enemies.enemy_elf_exp;
-        enemy_money = enemies.enemy_elf_money;
-    }
-    else if (enemy >= 21 && enemy <= 41)
-    {
-        std::cout << "Огр хочет сделать из вас суп." << std::endl;
-        enemy_hp = enemies.enemy_ogr_hp * (lvl_number + 1);
-        enemy_dmg = enemies.enemy_ogr_dmg;
-        enemy_exp = enemies.enemy_ogr_dmg;
-        enemy_money = enemies.enemy_ogr_money;
-    }
-    else if (enemy >= 42 && enemy <= 68)
-    {
-        std::cout << "На вас напал дикий пес ." << std::endl;
-        enemy_hp = enemies.enemy_wild_dog_hp * (lvl_number + 1);
-        enemy_dmg = enemies.enemy_wild_dog_dmg;
-        enemy_exp = enemies.enemy_wild_dog_exp;
-        enemy_money = enemies.enemy_wild_dog_money;
-    }
-    else if (enemy >= 69 && enemy <= 92)
-    {
-        std::cout << "Из куста выпрыгнул слизень." << std::endl;
-        enemy_hp = enemies.enemy_slizen_hp * (lvl_number + 1);
-        enemy_dmg = enemies.enemy_slizen_dmg;
-        enemy_exp = enemies.enemy_slizen_exp;
-        enemy_money = enemies.enemy_slizen_money;
-    }
-    else if (enemy >= 93 && enemy <= 99)
-        std::cout << "Противник не найден.\n\n";
-}
-void specifications(int const& n, int* lvl, int* lvl_hp, int* lvl_exp, int* lvl_dmg, std::string weapon_name, std::string armor_name, std::string shop_name, int& lvl_number, int& exp, int& comand, int& hp, int& hp_item, int& goddamn, int& dmg, int& dmg_item, int& enemy, int& enemy_hp, int& enemy_dmg, int& enemy_exp, int& money, int& shop, int& shop_money, int& enemy_money, int& shop_hp_item, int& shop_dmg_item)
-{
-    lvl_number = 0, exp = 0, comand; //Разное
-    hp = 100, hp_item = 0, goddamn = 0; //Жизнь
-    dmg, dmg_item = 0;  //Урон
-    enemy = 0, enemy_hp = 0, enemy_dmg = 0, enemy_exp = 0; //Враг
-    money = 0, shop = 0, shop_money = 0, enemy_money = 0, shop_hp_item = 0, shop_dmg_item = 0; //Магазин
-
-    for (int i = 0; i < n; i++)
-        lvl[i] = i + 1;
-    for (int i = 0; i < n; i++)
-        lvl_hp[i] = 25 * i + 100;
-    int lvl_exp1[10] = { 10,25,45,70,85,100,130,170,200,250 };//Опыт при соответственном уровне
-    for (int i = 0; i < n; i++)
-    {
-        lvl_exp[i] = lvl_exp1[i];
-    }
-    int lvl_dmg1[10] = { 3,5,9,12,15,19,24,28,35,40 };//Урон при соответственном уровне
-    for (int i = 0; i < n; i++)
-    {
-        lvl_dmg[i] = lvl_dmg1[i];
+    int comand;
+    std::cout << "Вы подошли к фотану.\nНа табличке возле него было написанно: \n„Коли хочешь испить из волшебного фонтана, путник, должен ты заплатить 30 монет, в ином случае будешь навеки проклят!“" << std::endl << std::endl;
+    std::cout << "Ваше количество монет: " << money << std::endl << std::endl;
+    std::cout << "1) Заплатить.\n2) Не платить.\n0) Уйти." << std::endl << std::endl;
+    std::cin >> comand;
+    std::cout << std::endl;
+    switch (comand) {
+    case 0:break;
+    case 1:
+        if (money >= 30) {
+            std::cout << "Вы исцелились." << std::endl << std::endl;
+            hp = lvl_hp[lvl_number] + hp_item - goddamn;
+            money -= 30;
+        }
+        else {
+            std::cout << "У вас недостатачно монет." << std::endl << std::endl;
+        }
+        break;
+    case 2:
+        std::cout << "Вы исцелились.\nВаше максимальное количество здоровья уменьшенно на 10 единиц." << std::endl << std::endl;
+        goddamn += 10;
+        hp = lvl_hp[lvl_number] + hp_item - goddamn;
+        if (hp < 1) {
+            std::cout << "Вас погубила жадность." << std::endl;
+        }
+        break;
     }
 }
-void Game_Loop(int const& n, int* lvl, int* lvl_hp, int* lvl_exp, int* lvl_dmg, std::string weapon_name, std::string armor_name, std::string shop_name, int& lvl_number, int& exp, int& comand, int& hp, int& hp_item, int& goddamn, int& dmg, int& dmg_item, int& enemy, int& enemy_hp, int& enemy_dmg, int& enemy_exp, int& money, int& shop, int& shop_money, int& enemy_money, int& shop_hp_item, int& shop_dmg_item)
+int main()
 {
     setlocale(LC_ALL, "rus");
-    while (hp > 0) { //Цикл игры
-        dmg = lvl_dmg[lvl_number] + dmg_item;
+    hero Amin;
+    buttle my_buttle;
+    smith smith_2;
+    fountain my_fountain;
+    lvl_inic(n, lvl, lvl_hp, lvl_exp, lvl_dmg);
+    while (Amin.hp > 0) { //Цикл игры
+        Amin.dmg = lvl_dmg[Amin.lvl_number] + Amin.dmg_item;
         std::cout << "Введите цифру что хотите сделать:\n1) Открыть информацию о герое.\n2) Отправиться в лес.\n3) Зайти к Кузнецу.\n4) Идти к фонтану.\n\n";
-        std::cin >> comand;
+        COMMAND my_choice;
+        std::cin >> my_choice.my_command;
         std::cout << std::endl;
-        switch (comand) {
+        switch (my_choice.my_command) {
         case 1:         //Вызов функции информации о герое.
-            info(n, lvl_number, lvl, lvl_exp, exp, hp, dmg, money, weapon_name, armor_name, goddamn);
+            Amin.info(n, Amin.lvl_number, lvl, lvl_exp, Amin.exp, Amin.hp, Amin.dmg, Amin.money, Amin.weapon_name, Amin.armor_name, Amin.goddamn);
             break;
         case 2:         //Лес и выбор противника
-            recruitment_of_the_enemy(enemy_hp, enemy_dmg, enemy_exp, enemy_money, enemy, lvl_number);
+            my_buttle.recruitment_of_the_enemy(my_buttle.enemy_hp, my_buttle.enemy_dmg, my_buttle.enemy_exp, my_buttle.enemy_money, my_buttle.enemy, Amin.lvl_number);
             //Вызов функции битвы
-            if (enemy >= 0 && enemy <= 92) {
-                battle(enemy, hp, enemy_hp, dmg, enemy_dmg, money, enemy_money, lvl_number, n, enemy_exp, exp, &lvl_exp[lvl_number], &lvl_hp[lvl_number], hp_item, goddamn);
+            if (my_buttle.enemy >= 0 && my_buttle.enemy <= 92) {
+                my_buttle.battle(my_buttle.enemy, Amin.hp, my_buttle.enemy_hp, Amin.dmg, my_buttle.enemy_dmg, Amin.money, my_buttle.enemy_money, Amin.lvl_number, n, my_buttle.enemy_exp, Amin.exp, &lvl_exp[Amin.lvl_number], &lvl_hp[Amin.lvl_number], Amin.hp_item, Amin.goddamn);
             }
             std::cout << std::endl; break;
         case 3: //Кузнец
-            smith(money, shop, shop_money, shop_hp_item, shop_dmg_item, comand, hp_item, dmg_item, weapon_name, armor_name, shop_name);
+            smith_2.shoop(Amin.money, Amin.shop, smith_2.shop_money, smith_2.shop_hp_items, smith_2.shop_dmg_items, my_choice.my_command, Amin.hp_item, Amin.dmg_item, Amin.weapon_name, Amin.armor_name, Amin.shop_name);
             std::cout << std::endl;
             break;
         case 4: //Вызов функции фонтана
-            fountain(money, hp, lvl_number, &lvl_hp[lvl_number], hp_item, goddamn);
+            my_fountain.fountain_(Amin.money, Amin.hp, Amin.lvl_number, &lvl_hp[Amin.lvl_number], Amin.hp_item, Amin.goddamn);
             break;
         }
     }
-}
 
+
+}
