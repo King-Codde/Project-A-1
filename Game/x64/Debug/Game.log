@@ -1,4 +1,17 @@
-﻿  Game.cpp
-C:\Users\killi\Desktop\проекты\Игра\The Game v0.2\Game\Project-A\Game\Game.cpp(65,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-C:\Users\killi\Desktop\проекты\Игра\The Game v0.2\Game\Project-A\Game\Game.cpp(170,37): warning C4244: *=: преобразование "double" в "int", возможна потеря данных
-  Game.vcxproj -> C:\Users\killi\Desktop\проекты\Игра\The Game v0.2\Game\Project-A\x64\Debug\Game.exe
+﻿  Components.cpp
+C:\Users\Амин\OneDrive\Рабочий стол\Дистанционка\Курсовая\Новая папка\Project-A\Game\Components.cpp(65,37): warning C4244: *=: преобразование "double" в "int", возможна потеря данных
+  Game.cpp
+C:\Users\Амин\OneDrive\Рабочий стол\Дистанционка\Курсовая\Новая папка\Project-A\Game\Game.cpp(15,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Source.cpp
+C:\Users\Амин\OneDrive\Рабочий стол\Дистанционка\Курсовая\Новая папка\Project-A\Game\Source.cpp(111,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\Амин\OneDrive\Рабочий стол\Дистанционка\Курсовая\Новая папка\Project-A\Game\Source.cpp(214,37): warning C4244: *=: преобразование "double" в "int", возможна потеря данных
+  Создание кода...
+  LINK : не найден или не выполнена сборка C:\Users\Амин\OneDrive\Рабочий стол\Дистанционка\Курсовая\Новая папка\Project-A\x64\Debug\Game.exe при последней инкрементной компоновке; выполняется полная компоновка
+Source.obj : error LNK2005: main уже определен в Game.obj
+Components.obj : error LNK2005: "void __cdecl battle(int &,int &,int &,int &,int &,int &,int &,int &,int,int &,int &,int * const,int * const,int &,int &)" (?battle@@YAXAEAH0000000H00QEAH100@Z) уже определен в Source.obj
+Components.obj : error LNK2005: "void __cdecl fountain(int &,int &,int &,int * const,int,int &)" (?fountain@@YAXAEAH00QEAHH0@Z) уже определен в Source.obj
+Components.obj : error LNK2005: "void __cdecl info(int,int &,int * const,int * const,int &,int &,int &,int &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,int &)" (?info@@YAXHAEAHQEAH10000V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@20@Z) уже определен в Source.obj
+Components.obj : error LNK2005: "void __cdecl recruitment_of_the_enemy(int &,int &,int &,int &,int &,int &)" (?recruitment_of_the_enemy@@YAXAEAH00000@Z) уже определен в Source.obj
+Components.obj : error LNK2005: "void __cdecl smith(int &,int &,int &,int &,int &,int &,int &,int &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?smith@@YAXAEAH0000000V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@11@Z) уже определен в Source.obj
+Components.obj : error LNK2005: "void __cdecl specifications(int const &,int *,int *,int *,int *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,int &,int &,int &,int &,int &,int &,int &,int &,int &,int &,int &,int &,int &,int &,int &,int &,int &,int &)" (?specifications@@YAXAEBHPEAH111V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@22AEAH33333333333333333@Z) уже определен в Source.obj
+C:\Users\Амин\OneDrive\Рабочий стол\Дистанционка\Курсовая\Новая папка\Project-A\x64\Debug\Game.exe : fatal error LNK1169: обнаружен многократно определенный символ - один или более
