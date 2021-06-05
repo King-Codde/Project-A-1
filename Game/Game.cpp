@@ -8,37 +8,10 @@ int lvl_hp[10];//Жизнь при соответственном уровне
 int lvl_exp[10];//Опыт при соответственном уровне
 int lvl_dmg[10];//Урон при соответственном уровне
 
-void lvl_inic(int const& n, int* lvl, int* lvl_hp, int* lvl_exp, int* lvl_dmg)
-{
-    for (int i = 0; i < n; i++)
-        lvl[i] = i + 1;
-    for (int i = 0; i < n; i++)
-        lvl_hp[i] = 25 * i + 100;
-    int lvl_exp1[10] = { 10,25,45,70,85,100,130,170,200,250 };//Опыт при соответственном уровне
-    for (int i = 0; i < n; i++)
-    {
-        lvl_exp[i] = lvl_exp1[i];
-    }
-    int lvl_dmg1[10] = { 3,5,9,12,15,19,24,28,35,40 };//Урон при соответственном уровне
-    for (int i = 0; i < n; i++)
-    {
-        lvl_dmg[i] = lvl_dmg1[i];
-    }
-}
-
-//Команды для Кузни
 class COMMAND
 {
 public:
     int my_command = 0;
-};
-//Команды для Кузни
-enum SMITH_COMMAN
-{
-    SMITH_COMMAND_IRON_CLUB = 1,
-    SMITH_COMMAND_STEEL_SWORD = 2,
-    SMITH_COMMAND_LEATHER_ARMOR = 3,
-    SMITH_COMMAND_IRON_ARMOR = 4,
 };
 
 class EnemyAndCo
@@ -70,6 +43,7 @@ public:
     int enemy_wild_dog_money = 5;
 
 };
+
 class wepon_and_armor
 {
 public:
@@ -97,10 +71,8 @@ public:
     int shop = 0;
     std::string weapon_name = "Тренировочные перчатки";
     std::string armor_name = "Тряпье";
-    std::string shop_name;
-    //void info(const int n, int& lvl_number, int lvl[10], int lvl_exp[10], int& exp, int& hp, int& dmg, int& money, std::string weapon_name, std::string armor_name, int& goddamn);
     void info(const int n, int& lvl_number, int lvl[10], int lvl_exp[10], int& exp, int& hp, int& dmg, int& money, std::string weapon_name, std::string armor_name, int& goddamn);
-
+    void lvl_inic(int const& n, int* lvl, int* lvl_hp, int* lvl_exp, int* lvl_dmg);
 };
 
 class enemy_characteristic
@@ -119,9 +91,7 @@ public:
     int shop_money = 0;
     int shop_hp_item = 0;
     int shop_dmg_item = 0;
-    int shop_name = 0;
-
-
+    std::string shop_name;
 };
 
 struct fountain
@@ -135,7 +105,7 @@ struct smith
     int shop_money = smith_.shop_money;
     int shop_hp_items = smith_.shop_hp_item;
     int shop_dmg_items = smith_.shop_dmg_item;
-    int shop_name = smith_.shop_name;
+    std::string shop_name = smith_.shop_name;
 
 
     void shoop(int& money, int& shop, int& shop_money, int& shop_hp_item, int& shop_dmg_item, int& comand, int& hp_item, int& dmg_item, std::string weapon_name, std::string armor_name, std::string shop_name);
@@ -157,6 +127,23 @@ struct buttle
 };
 
 
+void hero::lvl_inic(int const& n, int* lvl, int* lvl_hp, int* lvl_exp, int* lvl_dmg)
+{
+    for (int i = 0; i < n; i++)
+        lvl[i] = i + 1;
+    for (int i = 0; i < n; i++)
+        lvl_hp[i] = 25 * i + 100;
+    int lvl_exp1[10] = { 10,25,45,70,85,100,130,170,200,250 };//Опыт при соответственном уровне
+    for (int i = 0; i < n; i++)
+    {
+        lvl_exp[i] = lvl_exp1[i];
+    }
+    int lvl_dmg1[10] = { 3,5,9,12,15,19,24,28,35,40 };//Урон при соответственном уровне
+    for (int i = 0; i < n; i++)
+    {
+        lvl_dmg[i] = lvl_dmg1[i];
+    }
+}
 void buttle::recruitment_of_the_enemy(int& enemy_hp, int& enemy_dmg, int& enemy_exp, int& enemy_money, int& enemy, int& lvl_number)
 {
     setlocale(LC_ALL, "rus");
@@ -325,22 +312,22 @@ void smith::shoop(int& money, int& shop, int& shop_money, int& shop_hp_item, int
         case 0:
             shop = 0;
             break;
-        case SMITH_COMMAND_IRON_CLUB:
+        case 1:
             shop_money = w_and_a.weapon_money_iron_club;
             shop_name = "Железная Дубинка";
             shop_dmg_item = w_and_a.weapon_dmg_iron_club;
             shop = 1; break;
-        case SMITH_COMMAND_STEEL_SWORD:
+        case 2:
             shop_money = w_and_a.weapon_money_steel_sword;
             shop_name = "Стальной Меч";
             shop_dmg_item = w_and_a.weapon_dmg_steel_sword;
             shop = 1; break;
-        case SMITH_COMMAND_LEATHER_ARMOR:
+        case 3:
             shop_money = w_and_a.armor_money_leather_armor;
             shop_name = "Кожаная броня";
             shop_hp_item = w_and_a.armor_hp_leather_armor;
             shop = 2; break;
-        case SMITH_COMMAND_IRON_ARMOR:
+        case 4:
             shop_money = w_and_a.weapon_money_iron_club;
             shop_name = "Железная броня./n";
             shop_hp_item = w_and_a.armor_hp_iron_armor;
@@ -408,17 +395,18 @@ void fountain::fountain_(int& money, int& hp, int& lvl_number, int lvl_hp[], int
         break;
     }
 }
-int main()
+
+void game_loop()
 {
     setlocale(LC_ALL, "rus");
     hero Amin;
     buttle my_buttle;
     smith smith_2;
     fountain my_fountain;
-    lvl_inic(n, lvl, lvl_hp, lvl_exp, lvl_dmg);
+    Amin.lvl_inic(n,lvl,lvl_hp,lvl_exp,lvl_dmg);
     while (Amin.hp > 0) { //Цикл игры
         Amin.dmg = lvl_dmg[Amin.lvl_number] + Amin.dmg_item;
-        std::cout << "Введите цифру что хотите сделать:\n1) Открыть информацию о герое.\n2) Отправиться в лес.\n3) Зайти к Кузнецу.\n4) Идти к фонтану.\n\n";
+        std::cout << "Введите цифру что хотите сделать:\n1) Открыть информацию о герое.\n2) Отправиться в лес.\n3) Зайти к Кузнецу.\n4) Идти к фонтану.\n5) Выйти из игры\n";
         COMMAND my_choice;
         std::cin >> my_choice.my_command;
         std::cout << std::endl;
@@ -434,14 +422,21 @@ int main()
             }
             std::cout << std::endl; break;
         case 3: //Кузнец
-            smith_2.shoop(Amin.money, Amin.shop, smith_2.shop_money, smith_2.shop_hp_items, smith_2.shop_dmg_items, my_choice.my_command, Amin.hp_item, Amin.dmg_item, Amin.weapon_name, Amin.armor_name, Amin.shop_name);
+            smith_2.shoop(Amin.money, Amin.shop, smith_2.shop_money, smith_2.shop_hp_items, smith_2.shop_dmg_items, my_choice.my_command, Amin.hp_item, Amin.dmg_item, Amin.weapon_name, Amin.armor_name, smith_2.shop_name);
             std::cout << std::endl;
             break;
         case 4: //Вызов функции фонтана
             my_fountain.fountain_(Amin.money, Amin.hp, Amin.lvl_number, &lvl_hp[Amin.lvl_number], Amin.hp_item, Amin.goddamn);
             break;
+        case 5:
+            break;
         }
+        break;
     }
 
+}
 
+int main()
+{
+    game_loop();
 }
